@@ -1,4 +1,189 @@
+# BaSheet
+----
+The Ultimate Bash CheatSheat
 
+## SHORTCUTS and HISTORY
+
+| | |
+---|---
+`CTRL+A` | move to beginning of line
+`CTRL+B` | move backwards one character
+`CTRL+C` | stop the current command
+`CTRL+D` | delete one character backward or log out of current session, similar to `exit`
+`CTRL+E` | move to end of line
+`CTRL+F` | move forward one character
+`CTRL+G` | abort the current editing command & ring the terminal bell
+`CTRL+H` | delete one character under cursor (same as DELETE)
+`CTRL+J` | same as RETURN
+`CTRL+K` | deletes (kill) forward to end of line
+`CTRL+L` | clear screen & redisplay the line, same as `clear`
+`CTRL+M` | same as RETURN
+`CTRL+N` | next line in command history
+`CTRL+O` | same as RETURN, then displays next line in history file
+`CTRL+P` | previous line in command history
+`CTRL+R` | search backward
+`CTRL+S` | search forward
+`CTRL+T` | transpose two characters
+`CTRL+U` | kill backward from point to the beginning of line
+`CTRL+V` | make the next character typed verbatim
+`CTRL+W` | kill the word behind the cursor
+`CTRL+X` | list the possible filename completions of the current word
+`CTRL+Y` | retrieve (yank) last item killed
+`CTRL+Z` | stop the current command, resume with: `fg` (foreground) / `bg` (background)
+`ALT+B`| move backward one word
+`ALT+D` | delete next word
+`ALT+F` | move forward one word
+`ALT+H` | delete one character backward
+`BACKSPACE` | delete one character backward
+`DELETE` | delete one character under cursor
+`history` | show command line history
+`!!` | repeat the last command
+`!<n>` | refers to command line 'n'
+`!<string>` | refers to command starting with 'string'
+`clear` | clear the terminal screen
+`exit` | log out of current session
+
+## BASH BASICS
+
+### Shell execution
+
+| | |
+---|---
+`env` | display all environment variables
+`echo` $SHELL | display the shell you're using
+`echo` $BASH_VERSION  | display bash version
+`bash` | to use bash, `exit` to go back to previous shell
+`whereis bash` | locate the binary, source & manual-page for a command
+`which bash` | find out which program is executed as 'bash' e.g '/bin/bash'
+
+`echo "I'm in $(pwd)"` & ```echo "I'm in `pwd`"``` = same.
+
+See [Command substitution](http://wiki.bash-hackers.org/syntax/expansion/cmdsubst)
+
+## FILE COMMANDS
+
+| | |
+---|---
+`ls` | list files in current directory, `ls <dir>` to list files in a specific directory
+`ls -l` | list files in 'long format', contains: exact size, who owns it, who can view it & time it was last modified
+`ls -a` | list all files in 'long format', including hidden files (name beginning with '.')
+`ln -s <filename> <link>` | create symbolic link to file
+`touch <filename>` | create or updates (edit) your file
+`cat <filename>` | print file raw content (will not be interpreted)
+`any_command > <filename> '>'` | used for redirections, will set any_command's stdout to file instead of "real stdout" (generally /dev/stdout)
+`more <filename>` | show the first part of a file (move with space & type `q` to quit)
+`head <filename>` | output the first lines of file (default: 10 lines)
+`tail <filename>` | output the last lines of file (useful with -f option) (default: 10 lines)
+`vim <filename>` | open a file in VIM text editor, will create it if it doesn't exist
+`mv <filename1> <dest>` | move file, behavior changes based on 'dest' type: the file is placed into a *directory* or will replace 'dest' if its a *file*, useful for renaming.
+`cp <filename1> <dest>` | copy a file
+`rm <filename>` | remove a file
+`find . -name <name> <type>` | search for a file or a directory in the current directory & all its sub-directories
+`diff <filename1> <filename2>` | compare files & show where they differ
+`wc <filename>` | show how many lines, words & characters there are in a file. Use `-lwc` (lines, word, character) to output only 1 of them
+`sort <filename>` | sort contents of a text file line by line in: Alphabetical, Numeric (use `-n`) & Reversed (use `-r`)
+`sort -t -k <filename>` | sort contents on specific sort key field starting from 1, using the field separator t.
+`chmod -options <filename>` | change the read, write & execute permissions on your files (more infos: SUID, GUID)
+`gzip <filename>` | compress files using gzip algorithm
+`gunzip <filename>` | uncompress files compressed by gzip
+`gzcat <filename>` | look at gzipped file without having to gunzip it
+`lpr <filename>` | prints a file
+`lpq` | view the printer queue
+`lprm <jobnumber>` | remove something from printer queue
+`genscript` | convert plain text files into postscript for printing & gives options for formatting
+`dvips <filename>` | print .dvi files (i.e. files produced by LaTeX)
+`grep <pattern> <filenames>` | look for a string in files
+`grep -r <pattern> <dir>` | search recursively for pattern in directory
+
+## DIRECTORY COMMANDS
+
+| | |
+---|---
+`cd <dirname>` | change directory
+`cd` | change to home directory
+`cd ~` | change to home directory also, use `~` as a shortcut for home directory
+`cd -` | change to last directory
+`cd ..` | change to the parent directory
+`cd ../..` | move back two directories
+`pwd` | tells you the current directory
+`mkdir <dirname>` | make a new directory
+`rmdir <dirname>` | remove an empty directory
+`rmdir -rf <dirname>` | remove a non-empty directory
+`cp -r <dir1> <dir2>` | copy <dir1> into <dir2> including sub-directories
+`mv <dir1> <dir2>` | rename a directory from <dir1> to <dir2>
+
+## SYSTEM INFO & NETWORK COMMANDS
+
+| | |
+---|---
+`whoami` | return your username
+`passwd` | change your password
+`quota -v` | show disk quota size
+`date` | show current date & time
+`cal` | show current month calendar
+`uptime` | show current uptime
+`w` | display "whois" online
+`finger <user>` | display information about user
+`uname -a` | show kernel information
+`man <command>` | show a manual for specified command
+`df` | show disk usage size
+`du <filename>` | show disk usage of the files & directories in filename (`du -s` give only a total)
+`last <yourUsername>` | list your last login
+`ps -u yourusername` | list your processes
+`kill <PID>` | kill the process
+`killall <processname>` | kill all processes with the name
+`top` | display your currently active processes
+`bg` | list stopped or background jobs / resume a stopped job in the background
+`fg` | bring the most recent job to foreground / resume a stopped job in foreground 
+`fg <job>` | brings job to the foreground
+`ping <host>` | pings host & outputs results
+`whois <domain>` | gets "whois" information for domain
+`dig <domain>` | gets DNS information for domain
+`dig -x <host>` | reverse lookup host
+`wget <file>` | download file
+`curl <url>` | ###
+`ssh user@host` | connect to host as user
+`ssh -p <port> user@host` | connect to host on certain port as user
+`ssh-copy-id user@host` | adds SSH key to host for user to enable a keyed/passwordless login
+
+## VARIABLES
+
+`NAME="John"`
+| | |
+---|---
+`echo $NAME` | John
+`echo "$NAME"` | John
+`echo "${NAME}!"` | John!
+
+| | |
+---|---
+`varname=value` | define a variable
+`varname=value command` | define a variable to be in the environment of a subprocess
+`echo $varname` | check a variable's value
+`echo $$` | print process ID of the current shell
+`echo $!` | print process ID of the most recently invoked background job
+`echo $?` | display the exit status of the last command
+`read <varname>` | read a string from the input & assigns it to a variable 
+`let <varname> = <equation>` | mathematical calculations using operators like +, -, /, %
+`export VARNAME=value` | define an environment variable (will be available in subprocesses)
+`array[0]=valA` | how to define an array
+`array[1]=valB` |
+`array[2]=valC` |
+`array=([2]=valC [0]=valA [1]=valB)` | another way
+`array=(valA valB valC)` | and another
+`${array[i]}` | display array's value for this index. If no index is supplied, array element 0 is assumed
+`${#array[i]}` | find out the length of any element in the array
+`${#array[@]}` | find out how many values there are in the array
+`declare -a` | the variables are treaded as arrays
+`declare -f` | uses function names only
+`declare -F` | display function names without definitions
+`declare -i` | the variables are treaded as integers
+`declare -r` | make the variables read-only
+`declare -x` | mark the variables for export via the environment
+`${varname:-word}` | if varname exists & isn't null, return its value; otherwise return word
+`${varname:=word}` | if varname exists & isn't null, return its value; otherwise set it word and then return its value
+`${varname:?message}` | if varname exists & isn't null, return its value; otherwise print varname, followed by message & abort the current command or script
+`${varname:+word}` | if varname exists & isn't null, return word; otherwise return null
 `${varname:offset:length}` | perform substring expansion, returns the substring of $varname starting at offset & up to length characters
 `${variable#pattern}` | if pattern matches the beginning of the variable's value, delete the shortest part that matches & return the rest
 `${variable##pattern}` | if pattern matches the beginning of the variable's value, delete the longest part that matches & return the rest
@@ -37,6 +222,7 @@ See: [Brace expansion](http://wiki.bash-hackers.org/syntax/expansion/brace)
 ----
 
 `name="John"`
+
 | | |
 ---|---
 `echo ${name}` | "John"
@@ -91,7 +277,8 @@ See: [Parameter expansion](http://wiki.bash-hackers.org/syntax/pe)
 `${FOO//from/to}` | Replace all
 `${FOO/%from/to}` | Replace suffix
 `${FOO/#from/to}` | Replace prefix
-# FUNCTIONS
+
+## FUNCTIONS
 
 The function refers to passed arguments by position (as if they were positional parameters), that is, `$1`, `$2`, and so forth.
 
@@ -258,7 +445,7 @@ else
 fi
 ```
 
-# FLOW CONTROLS
+## FLOW CONTROLS
 
 | | |
 ---|---
@@ -267,7 +454,7 @@ fi
 `-a` | 'and' operator inside a test conditional expression
 `-o` | 'or' operator inside a test conditional expression
 
-# STRINGS
+## STRINGS
 
 | | |
 ---|---
@@ -319,7 +506,7 @@ fi
 The `:` is optional.
 eg; `${FOO=word}` works too.
 
-# FILES
+## FILES
 
 | | |
 ---|---
@@ -337,7 +524,7 @@ eg; `${FOO=word}` works too.
 `file1 -nt file2` | file1 is newer than file2
 `file1 -ot file2` | file1 is older than file2
 
-# NUMBERS
+## NUMBERS
 
 | | |
 ---|---
@@ -550,7 +737,7 @@ done
 
 See [Special parameters](http://wiki.bash-hackers.org/syntax/shellvars#special_parameters_and_shell_variables).
 
-# COMMAND-LINE PROCESSING CYCLE
+## COMMAND-LINE PROCESSING CYCLE
 
 The default order for command lookup is:
 Functions > Built-ins > Scripts > executables.
@@ -564,7 +751,7 @@ There are three built-ins that you can use to override this order: `command`, `b
 `enable` |  enable / disable shell built-ins
 `eval`  | take arguments & run them through the command-line processing steps all over again
 
-# INPUT/OUTPUT REDIRECTORS
+## INPUT/OUTPUT REDIRECTORS
 
 | | |
 ---|---
