@@ -1,6 +1,6 @@
 # BaSheet
 ----
-The Ultimate Bash CheatSheat
+The Ultimate Bash CheatSheet.
 
 ## SHORTCUTS and HISTORY
 
