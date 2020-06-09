@@ -14,16 +14,16 @@ I take **NO** credit for the vast amounts of knowledge here, it is not mine.
 I have merely collated the best cheatsheets, merged them, collected references from accross the net, slightly edited some english and converted it all into three formats.
 This would not be here if it wasn't for the following people's hard work:
 
-**Cheatsheets**
+**Cheatsheets:**
 
 - www.devhints.io/bash
 - www.github.com/LeCoupa/awesome-cheatsheets/blob/master/languages/bash.sh
 
-**References**
+**References:**
 
 - www.wiki-dev.bash-hackers.org
 - www.tldp.org
 - www.mywiki.wooledge.org
 - www.davidpashley.com
 
-# View the Markdown version [here](www.github.com/5c0tt-b0t/Basheet/blob/master/Basheet.md)
+# View the Markdown version [here](Basheet.md)
