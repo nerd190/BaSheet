@@ -149,6 +149,7 @@ See [Command substitution](http://wiki.bash-hackers.org/syntax/expansion/cmdsubs
 ## VARIABLES
 
 `NAME="John"`
+
 | | |
 ---|---
 `echo $NAME` | John
@@ -166,14 +167,6 @@ See [Command substitution](http://wiki.bash-hackers.org/syntax/expansion/cmdsubs
 `read <varname>` | read a string from the input & assigns it to a variable 
 `let <varname> = <equation>` | mathematical calculations using operators like +, -, /, %
 `export VARNAME=value` | define an environment variable (will be available in subprocesses)
-`array[0]=valA` | how to define an array
-`array[1]=valB` |
-`array[2]=valC` |
-`array=([2]=valC [0]=valA [1]=valB)` | another way
-`array=(valA valB valC)` | and another
-`${array[i]}` | display array's value for this index. If no index is supplied, array element 0 is assumed
-`${#array[i]}` | find out the length of any element in the array
-`${#array[@]}` | find out how many values there are in the array
 `declare -a` | the variables are treaded as arrays
 `declare -f` | uses function names only
 `declare -F` | display function names without definitions
@@ -202,6 +195,7 @@ See [Command substitution](http://wiki.bash-hackers.org/syntax/expansion/cmdsubs
 ### String quotes
 
 `NAME="John"`
+
 | | |
 ---|---
 `echo "Hi $NAME"` | Hi John
@@ -210,6 +204,7 @@ See [Command substitution](http://wiki.bash-hackers.org/syntax/expansion/cmdsubs
 ### Brace expansion
 
 `echo {A,B}.js`
+
 | | |
 ---|---
 `{A,B}` | Same as `A B`
@@ -235,6 +230,7 @@ See: [Brace expansion](http://wiki.bash-hackers.org/syntax/expansion/brace)
 `echo ${food:-Cake}` | $food or "Cake"
 
 `length=2`
+
 | | |
 ---|---
 `echo ${name:0:length}` | "Jo"
@@ -242,6 +238,7 @@ See: [Brace expansion](http://wiki.bash-hackers.org/syntax/expansion/brace)
 See: [Parameter expansion](http://wiki.bash-hackers.org/syntax/pe)
 
 `STR="/path/to/foo.cpp"`
+
 | | |
 ---|---
 `echo ${STR%.cpp}` | /path/to/foo
@@ -253,6 +250,7 @@ See: [Parameter expansion](http://wiki.bash-hackers.org/syntax/pe)
 `echo ${STR/foo/bar}` | /path/to/bar.cpp
 
 `STR="Hello world"`
+
 | | |
 ---|---
 `echo ${STR:6:5}` | "world"
@@ -260,6 +258,7 @@ See: [Parameter expansion](http://wiki.bash-hackers.org/syntax/pe)
 
 
 `SRC="/path/to/foo.cpp"`
+
 | | |
 ---|---
 `BASE=${SRC##*/}` | "foo.cpp" (basepath)
@@ -292,7 +291,7 @@ function functname() {
 `unset -f functname` deletes a function definition
 `declare -f`  displays all defined functions in your login session
 
-### Example:
+Example:
 
 ```bash
 get_name() {
@@ -301,12 +300,66 @@ get_name() {
 
 echo "You are $(get_name)"
 ```
+### Defining functions
+
+```bash
+myfunc() {
+    echo "hello $1"
+}
+```
+Same as above, alternate syntax:
+
+```bash
+function myfunc() {
+    echo "hello $1"
+}
+```
+
+`myfunc "John"`
+
+### Returning values
+
+```bash
+myfunc() {
+    local myresult='some value'
+    echo $myresult
+}
+```
+
+```bash
+result="$(myfunc)"
+```
+
+### Raising errors
+
+```bash
+myfunc() {
+  return 1
+}
+```
+
+```bash
+if myfunc; then
+  echo "success"
+else
+  echo "failure"
+fi
+```
 
 ## Arrays
 ----
 
 ### Defining arrays
 
+| | |
+---|---
+`array[0]=valA` | how to define an array
+`array[1]=valB` |
+`array[2]=valC` |
+`array=([2]=valC [0]=valA [1]=valB)` | another way
+`array=(valA valB valC)` | and another
+
+Example:
 ```bash
 Fruits=('Apple' 'Banana' 'Orange')
 ```
@@ -317,10 +370,11 @@ Fruits[1]="Banana"
 Fruits[2]="Orange"
 ```
 
-### Working with arrays
-
 | | |
 ---|---
+`${array[i]}` | display array's value for this index. If no index is supplied, array element 0 is assumed
+`${#array[i]}` | find out the length of any element in the array
+`${#array[@]}` | find out how many values there are in the array
 `echo ${Fruits[0]}` | Element #0
 `echo ${Fruits[@]}` | All elements, space-separated
 `echo ${#Fruits[@]}` | Number of elements
@@ -339,14 +393,6 @@ Fruits[2]="Orange"
 `Fruits=("${Fruits[@]}")` | Duplicate
 `Fruits=("${Fruits[@]}""${Veggies[@]}")` | Concatenate
 ```lines=(`cat "logfile"`)``` | Read from file
-
-### Iteration
-
-```bash
-for i in "${arrayName[@]}"; do
-  echo $i
-done
-```
 
 ## Dictionaries
 ----
@@ -378,7 +424,13 @@ Declares `sound` as a Dictionary object (aka associative array).
 
 ### Iteration
 
-#### Iterate over values
+```bash
+for i in "${arrayName[@]}"; do
+  echo $i
+done
+```
+
+Example:
 
 ```bash
 for val in "${sounds[@]}"; do
@@ -392,57 +444,6 @@ done
 for key in "${!sounds[@]}"; do
   echo $key
 done
-```
-
-## Functions
-----
-
-### Defining functions
-
-```bash
-myfunc() {
-    echo "hello $1"
-}
-```
-
-```bash
-# Same as above (alternate syntax)
-function myfunc() {
-    echo "hello $1"
-}
-```
-
-```bash
-myfunc "John"
-```
-
-### Returning values
-
-```bash
-myfunc() {
-    local myresult='some value'
-    echo $myresult
-}
-```
-
-```bash
-result="$(myfunc)"
-```
-
-### Raising errors
-
-```bash
-myfunc() {
-  return 1
-}
-```
-
-```bash
-if myfunc; then
-  echo "success"
-else
-  echo "failure"
-fi
 ```
 
 ## FLOW CONTROLS
@@ -483,12 +484,14 @@ fi
 ### Manipulation
 
 `STR="HELLO WORLD!"`
+
 | | |
 ---|---
 `echo ${STR,}` | "hELLO WORLD!" (lowercase 1st letter)
 `echo ${STR,,}` | "hello world!" (all lowercase)
 
 `STR="hello world!"`
+
 | | |
 ---|---
 `echo ${STR^}` | "Hello world!" (uppercase 1st letter)
@@ -535,7 +538,7 @@ eg; `${FOO=word}` works too.
 `-gt` | greater than
 `-ne` | not equal
 
-### Conditionals
+## Conditionals
 
 ### Conditions
 
@@ -576,31 +579,28 @@ Note that `[[` is actually a command/program that returns either `0` (true) or `
 `[[ FILE1 -ot FILE2 ]]` | 2 is more recent than 1
 `[[ FILE1 -ef FILE2 ]]` | Same files
 
-### Example
+Example:
 
-```bash
 # String
+```bash
 if [[ -z "$string" ]]; then
   echo "String is empty"
 elif [[ -n "$string" ]]; then
   echo "String is not empty"
 fi
 ```
-
-```bash
 # Combinations
+```bash
 if [[ X ]] && [[ Y ]]; then
   ...
 fi
 ```
-
-```bash
 # Equal
+```bash
 if [[ "$A" == "$B" ]]
 ```
-
-```bash
 # Regex
+```bash
 if [[ "A" =~ . ]]
 ```
 
@@ -722,8 +722,9 @@ done
 
 ### Conditional execution
 
-`git commit && git push` and
-`git commit || echo "Commit failed"` or
+`git commit && git push` (and)
+
+`git commit || echo "Commit failed"` (or)
 
 ### Arguments
 
@@ -776,14 +777,14 @@ There are three built-ins that you can use to override this order: `command`, `b
 `n>&-` | close the ouput from file descriptor n
 `n<&-` | close the input from file descripor n
 
-examples:
-`python hello.py > output.txt` stdout to (file)
-`python hello.py >> output.txt` stdout to (file), append
-`python hello.py 2> error.log` stderr to (file)
-`python hello.py 2>&1` stderr to stdout
-`python hello.py 2>/dev/null` stderr to (null)
-`python hello.py &>/dev/null` stdout and stderr to (null)
-`python hello.py < foo.txt`  feed foo.txt to stdin for python
+Example:
+- `python hello.py > output.txt` stdout to (file)
+- `python hello.py >> output.txt` stdout to (file), append
+- `python hello.py 2> error.log` stderr to (file)
+- `python hello.py 2>&1` stderr to stdout
+- `python hello.py 2>/dev/null` stderr to (null)
+- `python hello.py &>/dev/null` stdout and stderr to (null)
+- `python hello.py < foo.txt`  feed foo.txt to stdin for python
 
 # PROCESS HANDLING
 
@@ -814,24 +815,6 @@ examples:
 `trap - sig1 sig2` | reset the action taken when the signal is received to the default
 `disown <PID|JID>` | remove the process from the list of jobs
 `wait` | wait until all background jobs have finished
-
-# TIPS & TRICKS
-
-Set an alias:
-```bash
-cd; nano .bash_profile
-> alias gentlenode='ssh admin@gentlenode.com -p 3404'  # add your alias in .bash_profile
-```
-
-Go quickly to a specific directory:
-```bash
-cd; nano .bashrc
-> shopt -s cdable_vars
-> export websites="/Users/mac/Documents/websites"
-
-source .bashrc
-cd $websites
-```
 
 # DEBUGGING SHELL PROGRAMS
 
@@ -884,11 +867,30 @@ function returntrap {
 ```
 `trap returntrap RETURN` is executed each time a shell function or a script executed with the . or source commands finishes executing
 
+# TIPS & TRICKS
+
+Set an alias:
+```bash
+cd; nano .bash_profile
+> alias gentlenode='ssh admin@gentlenode.com -p 3404'  # add your alias in .bash_profile
+```
+
+Go quickly to a specific directory:
+```bash
+cd; nano .bashrc
+> shopt -s cdable_vars
+> export websites="/Users/mac/Documents/websites"
+
+source .bashrc
+cd $websites
+```
+
 # COLORS AND BACKGROUNDS 
 
 `Color_Off='\033[0m'` Text Reset
 
 Regular Text Colours:
+
 | code | colour |
 ---|---
 `Black='\033[0;30m'` | Black
@@ -909,6 +911,7 @@ Regular Text Colours:
 `LCyan='\033[0;96m'` | Light Cyan
 
 Bold:
+
 | code | colour |
 ---|---
 `BBlack='\033[1;30m'` | Black
@@ -921,6 +924,7 @@ Bold:
 `BWhite='\033[1;37m'` | White
 
 Underline:
+
 | code | colour |
 ---|---
 `UBlack='\033[4;30m'` | Black
@@ -933,6 +937,7 @@ Underline:
 `UWhite='\033[4;37m'` | White
 
 Background:
+
 | code | colour |
 ---|---
 `On_Black='\033[40m'` | Black
@@ -954,7 +959,6 @@ echo -e "${Red}${On_White}This is Red test on White background${Color_Off}"`
 option `-s` is mandatory, it enable interpretation of backslash escapes.
 
 ### Strict mode
-
 ```bash
 set -euo pipefail
 IFS=$'\n\t'
@@ -976,8 +980,6 @@ comment
 
 ## Options
 ----
-
-### Options
 
 | | |
 ---|---
@@ -1002,14 +1004,14 @@ matches.
 ## History
 ----
 
-### Commands
+Commands:
 
 | | |
 ---|---
 `history` | Show history
 `shopt -s histverify` | Don't execute expanded result immediately
 
-### Expansions
+Expansions:
 
 | | |
 ---|---
@@ -1082,6 +1084,7 @@ source "${0%/*}/../share/foo.sh"
 ```
 
 ### printf
+
 | | |
 ---|---
 `printf "Hello %s, I'm %s" Sven Olga` | "Hello Sven, I'm Olga"
