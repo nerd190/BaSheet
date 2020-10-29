@@ -30,10 +30,11 @@ The Ultimate Bash CheatSheet
 `CTRL+X` | list the possible filename completions of the current word
 `CTRL+Y` | retrieve (yank) last item killed
 `CTRL+Z` | stop the current command, resume with: `fg` (foreground) / `bg` (background)
-`ALT+B`| move backward one word
+`ALT+B` | move backward one word
 `ALT+D` | delete next word
 `ALT+F` | move forward one word
 `ALT+H` | delete one character backward
+`ALT+V` | edit command in editor and execute
 `BACKSPACE` | delete one character backward
 `DELETE` | delete one character under cursor
 `history` | show command line history
