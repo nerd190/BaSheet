@@ -109,7 +109,7 @@ See [Command substitution](http://wiki.bash-hackers.org/syntax/expansion/cmdsubs
 `pwd` | tells you the current directory
 `mkdir <dirname>` | make a new directory
 `rmdir <dirname>` | remove an empty directory
-`rmdir -rf <dirname>` | remove a non-empty directory
+`rm -rf <dirname>` | force remove a non-empty directory
 `cp -r <dir1> <dir2>` | copy <dir1> into <dir2> including sub-directories
 `mv <dir1> <dir2>` | rename a directory from <dir1> to <dir2>
 
